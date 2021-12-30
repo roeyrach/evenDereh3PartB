@@ -12,8 +12,7 @@ public class Server {
 
 	public interface ClientHandler{
 		// define...
-		void handleClient(InputStream inFromClient, OutputStream outToClient);
-		void close();
+		void handleClient(Socket client);
 	}
 	int clientLimit;
 	volatile boolean stop;
@@ -31,8 +30,7 @@ public class Server {
 				while(!stop) {
 					try {
 						Socket aClient = server.accept(); // blocking call
-						ch.handleClient(aClient.getInputStream(), aClient.getOutputStream());
-						ch.close();
+						ch.handleClient(aClient);
 						aClient.close();
 					} catch (SocketTimeoutException e) {}
 				}

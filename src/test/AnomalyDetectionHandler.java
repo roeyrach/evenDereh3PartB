@@ -9,16 +9,21 @@ import java.net.Socket;
 import java.net.SocketException;
 
 public class AnomalyDetectionHandler implements ClientHandler{
-
+	SocketIO sio;
 	@Override
-	public void handleClient(InputStream inFromClient, OutputStream outToClient) {
-
+	public void handleClient(Socket client) {
+		this.sio = new SocketIO(client);
+		CLI cli = new CLI(sio);
+		cli.start();
+//		try {
+			this.sio.close();
+//		}
+//		catch (IOException e)
+//		{
+//			e.printStackTrace();
+//		}
 	}
 
-	@Override
-	public void close() {
-
-	}
 
 	public class SocketIO implements DefaultIO{
 		BufferedReader in;
@@ -35,8 +40,14 @@ public class AnomalyDetectionHandler implements ClientHandler{
 			}
 		}
 		@Override
-		public String readText() throws IOException {
-			return in.readLine();
+		public String readText() {
+			String txt = new String();
+			try{
+				txt = in.readLine();
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+			return txt;
 		}
 
 		@Override
@@ -45,15 +56,25 @@ public class AnomalyDetectionHandler implements ClientHandler{
 		}
 
 		@Override
-		public float readVal() throws IOException {
-			String line =  in.readLine();
-			float val = Float.parseFloat(line);
+		public float readVal() {
+			float val = -1;
+			try{
+				String line =  in.readLine();
+				val = Float.parseFloat(line);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 			return val;
 		}
 
 		@Override
 		public void write(float val) {
 			out.print(val);
+		}
+
+		void close() {
+//			in.close();
+			out.close();
 		}
 	}
 

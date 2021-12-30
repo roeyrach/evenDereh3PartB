@@ -49,7 +49,7 @@ public class MainTrain {
 			
 			Thread reader=new Thread(()->{
 				try {
-					PrintWriter out=new PrintWriter(new FileWriter("output.txt"),true);
+					PrintWriter out=new PrintWriter(new FileWriter("C:\\Users\\97250\\IdeaProjects\\evenDereh3PartB\\src\\output.txt"),true);
 					String line;
 					while(!(line=inFromServer.readLine()).equals("bye")) {
 						out.println(line);
@@ -62,7 +62,7 @@ public class MainTrain {
 			
 			Thread writer=new Thread(()-> {
 				try {
-					BufferedReader in=new BufferedReader(new FileReader("input.txt"));
+					BufferedReader in=new BufferedReader(new FileReader("C:\\Users\\97250\\IdeaProjects\\evenDereh3PartB\\src\\test\\input.txt"));
 					String line;
 					while(!(line=in.readLine()).equals("6")) {
 						outToserver.println(line);
@@ -100,7 +100,7 @@ public class MainTrain {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {}		
 		server.stop();
-		check("output.txt", "expectedOutput.txt");
+		check("C:\\Users\\97250\\IdeaProjects\\evenDereh3PartB\\src\\output.txt", "C:\\Users\\97250\\IdeaProjects\\evenDereh3PartB\\src\\test\\expectedOutput.txt");
 		System.out.println("done");
 	}
 

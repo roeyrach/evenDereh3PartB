@@ -10,11 +10,11 @@ public class Commands {
 
 	// Default IO interface
 	public interface DefaultIO {
-		public String readText() throws IOException;
+		public String readText();
 
 		public void write(String text);
 
-		public float readVal() throws IOException;
+		public float readVal();
 
 		public void write(float val);
 
@@ -264,7 +264,7 @@ public class Commands {
 
 		@Override
 		public void execute() {
-			dio.write("bye.");
+			dio.write("bye");
 		}
 	}
 	// implement here all others commands
